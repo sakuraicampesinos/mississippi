@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+    <!--head読み込み-->
+    <div th:replace="header :: head"></div>
+    <!--headここまで-->
+
+    <body>
+
+
+        <!-- headerナビ -->
+        <div th:replace="nav :: navi_bar"></div>
+        <!-- headerナビここまで -->
+
+
+
+        <div class="container section">
+
+            <nav class="panel">
+                <p class="panel-heading">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                    アカウント
+                </p>
+                
+                <div class="panel-block">
+                    <a href="custom_image.html">
+                        画像アップロードページへ
+                    </a>
+                </div>
+
+                <div class="panel-block">
+                    <form th:action="@{/profileEdit}" th:object="${userEditForm}" method="post">
+
+                        <div class="control has-icons-left">
+                            <label class="label">ユーザ名</label>
+                            <div class="control">
+                                <input class="input" type="text"  name="name" th:value="${user.name}" ></input>
+                                <input type="hidden" name="id" th:value="${user.id}"></input>
+                                <!--<span th:if="${#fields.hasErrors('*{name}')}" th:errors="*{name}" style="color: red" />-->
+
+                            </div>
+                            <button id="sub" class="button is-success" type="submit" >Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </nav>
+
+        </div>
+
+
+        <!--フッター読み込み-->
+        <div th:replace="footer :: copy"></div>
+        <!--フッターここまで-->
+
+
+    </body>
+
+</html>

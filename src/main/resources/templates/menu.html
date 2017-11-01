@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+    <!--head読み込み-->
+    <div th:replace="header :: head"></div>
+    <!--headここまで-->
+
+    <body>
+
+        <!-- headerナビ -->
+        <div th:replace="nav :: navi_bar"></div>
+        <!-- headerナビここまで -->
+
+        <!--メインコンテンツここから-->
+        <div class="container section">
+
+            <div class="columns is-multiline">
+
+                <!--ここログインユーザのカード-->
+                <div class="column is-one-quarter" >
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-64x64">
+                                        <img src="https://s3-ap-northeast-1.amazonaws.com/sakuraicamp/sigur+ros.png" alt="Placeholder image"></img>
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4"><span th:text="${u_name}">（ユーザ名）</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-content" th:if="${task != null}">
+                            <h1 class="subtitle"><span th:text="${task.title}"></span></h1>
+                            <p><span th:text="${task.content}"></span></p>
+                            <p><span th:text="|${#dates.format(task.end_date, 'HH:mm')} くらいまで|"></span></p>
+                            <div th:if="${task.done}">
+                            <span class="icon has-text-success">
+                                <i class="fa fa-check-square"></i>
+                            </span>
+                            </div>
+                        </div>
+
+                        <div class="card-content" th:if="${task == null}" data-intro="今から何時くらいまで何をするか登録しましょう" data-step="1">
+                            <p>今日のタスクはまだ登録されていません</p>
+                        </div>
+
+
+                        <footer class="card-footer" th:if="${task != null}">
+                            <p data-tgt="wd1" class="btns card-footer-item">
+                               
+                                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                               
+                            </p>
+
+                            <form th:unless="${task.done}" th:action="@{/done}" method="post" class="card-footer-item">
+                                <button type="submit" class="button is-success">Done</button> 
+                                <input type="hidden" name="id" th:value="${task.id}"></input>
+                            </form>
+                            
+                        </footer>
+
+                        <footer class="card-footer" th:if="${task == null}" data-intro="早速タスクを登録してみよう！" data-step="2">
+                            <p data-tgt="wd1" class="btns card-footer-item">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </p>
+                        </footer>
+
+                    </div>
+                </div>
+
+
+                <div class="column is-one-quarter" th:each = "othertasks : ${othertasks} ">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-64x64">
+                                        <img src="http://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"></img>
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4"><span th:text="${othertasks.user.name}">（ユーザ名）</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-content">
+                            <h1 class="subtitle"><span th:text="${othertasks.title}"></span></h1>
+                            <p><span th:text="${othertasks.content}"></span></p>
+                            <p><span th:text="|${#dates.format(othertasks.end_date, 'HH:mm')} くらいまで|"></span></p>
+                            <div th:if="${othertasks.done}">
+                            <span class="icon has-text-success">
+                                <i class="fa fa-check-square"></i>
+                            </span>
+                            </div>
+                        </div>
+
+                        <footer class="card-footer">
+                            <!--<p data-tgt="wd1" class="btns card-footer-item">ENTER</p>-->
+
+                        </footer>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <!-- モーダル -->
+            <div class="modal wd1">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">タスク登録</p>
+                    </header>
+                    <section class="modal-card-body">
+                        <!-- Content ... -->
+                        <!-- <form id="form" action="/register"  method="post" > -->
+                        <form id="form" action="/register" th:action="@{/register}" th:object="${taskForm}" method="post" onsubmit="return input_check();">
+
+                            <!-- <p>タイトル(案件名): <input type="text" th:field="*{title}" /></p> -->
+                            <!-- <p>内容: <input type="text" th:field="*{content}" /></p> -->
+
+                            <div class="field">
+                                <label class="label">タイトル(案件名)</label>
+                                <div class="control">
+                                    <input id="title" name="title" class="input" type="text" th:field="*{title}" placeholder="title"></input>
+                                    <span id="title_error" class="error_m"></span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">内容</label>
+                                <div class="control">
+                                    <input id="content" name="content" class="input" type="text" th:field="*{content}" placeholder="タスクの内容"></input>
+                                    <span id="content_error" class="error_m"></span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">開始時間</label>
+                                <div class="control">
+                                    <input id="start" name="start" class="input" size="5" type="text" th:field="*{start_date}" placeholder="HH:mm"></input>
+                                    <span id="start_error" class="error_m"></span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">終了時間</label>
+                                <div class="control">
+                                    <input id="end" name="end" class="input" size="5" type="text" th:field="*{end_date}" placeholder="HH:mm"></input>
+                                    <span id="end_error" class="error_m"></span>
+                                </div>
+                            </div>
+                            <button id="sub" type="submit" class="button is-success">登録</button>
+                            <!--<button class="button close" aria-label="close">Cancel</button>-->
+                            <p class="button close" aria-label="close">Cancel</p>
+
+                        </form>
+                    </section>
+
+                </div>
+            </div>
+            <!-- モーダルここまで -->
+
+
+        </div>
+        <!--これメインコンテンツ終わり-->
+
+        <!--フッター読み込み-->
+        <div th:replace="footer :: copy"></div>
+        <!--フッターここまで-->
+
+        <script type="text/javascript">
+            introJs().start();
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+
+        <!-- headerナビ -->
+        <nav th:fragment="navi_bar" class="navbar" role="navigation" aria-label="main navigation">
+
+            <div class="nav-right nav-menu">
+                <a class="nav-item is-tab is-active" href="menu.html">
+                    Home
+                </a>
+                <a class="navbar-item" href="todaytask.html" th:action="@{/todaytask}" >
+                    <!--<i class="fa fa-tasks" aria-hidden="true"></i>-->
+                    Today
+                </a>
+                <a class="navbar-item" href="myProfile.html" th:action="@{/myProfile}" >
+                    <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                    Profile
+                </a>
+                <form class="navbar-item" method="post" th:action="@{/logout}">
+                    <input id="logout_bt" class="button" type="submit" value="Logout"/>
+                </form>
+            </div>
+
+        </nav>
+        <!-- headerナビここまで -->
+
+    </body>
+</html>

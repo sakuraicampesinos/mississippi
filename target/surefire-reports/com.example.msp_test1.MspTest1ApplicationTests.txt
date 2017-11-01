@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.msp_test1.MspTest1ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 97.071 sec - in com.example.msp_test1.MspTest1ApplicationTests

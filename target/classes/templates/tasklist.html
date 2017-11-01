@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <title>一覧</title>
+        <link rel="stylesheet" media="all" th:href="@{css/style.css}"/>
+        <link rel="stylesheet" media="all" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    </head>
+    <body>
+
+        <table>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.content}"></td>
+                <td th:text="${task.create_date}"></td>
+                <td th:text="${task.start_date}"></td>
+                <td th:text="${task.end_date}"></td>
+                <td th:text="${task.user.id}"></td>
+
+
+            </tr>
+        </table>
+        
+    </body>
+</html>

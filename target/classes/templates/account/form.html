@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Sign up</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+        <link href="/bootstrap/css/bootstrap.css" th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"></link>
+        <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"></link>
+        <link href="/css/style-responsive.css" th:href="@{/css/style-responsive.css}" rel="stylesheet"></link>
+        
+    </head>
+   
+    <body>
+        <div id="login-page">
+	  	<div class="container">
+
+                     <form class="form-login" th:action="@{/accounts/confirm}" th:object="${accountForm}" method="post">
+		        <h2 class="form-login-heading">Sign up</h2>
+		        <div class="login-wrap">
+                            <input type="text" th:field="*{name}" class="form-control" placeholder="UserName" ></input>
+                            <span th:if="${#fields.hasErrors('*{name}')}" th:errors="*{name}" style="color: red" />
+                            
+                            <br />
+                            <input type="text" th:field="*{mail}" class="form-control" placeholder="Main Address" ></input>
+                            <span th:if="${#fields.hasErrors('*{mail}')}" th:errors="*{mail}" style="color: red" /> 
+
+                            <br/>
+                            
+                            <input type="password" th:field="*{password}" class="form-control" placeholder="Password" ></input>
+                            <span th:if="${#fields.hasErrors('*{password}')}" th:errors="*{password}" style="color: red" /> 
+
+                            
+                            <br />
+                            
+                            <button class="btn btn-theme btn-block" type="submit" >Submit</button>
+                            <a href="./" th:href="@{/}" >
+                                    Log in
+                                </a>
+                        </div>
+                      </form>
+                </div>
+        </div>
+    </body>
+</html>

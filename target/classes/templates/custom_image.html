@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+    <!--head読み込み-->
+    <div th:replace="header :: head"></div>
+    <!--headここまで-->
+
+    <body>
+
+
+        <!-- headerナビ -->
+        <div th:replace="nav :: navi_bar"></div>
+        <!-- headerナビここまで -->
+
+
+
+        <div class="container section">
+
+            <nav class="panel">
+                <p class="panel-heading">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                    アカウント画像アップロード
+                </p>
+
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image"></img>
+                            </figure>
+                        </div>
+
+                        <form method="post" enctype="multipart/form-data" th:action="@{/upload}">
+                            <input id="afile" name="fileData" type="file" />
+                            <img id="thumb" width="64"></img>
+                            <input id="up_btn" type="submit" value="アップロード" />
+                        </form>
+                    </article>
+                </div>
+
+                <script type="text/javascript">
+
+                    showImage(false);
+
+                    $("#afile").onchange = function (evt) {
+                        showImage(false);
+                        var files = evt.target.files;
+                        if (files.length == 0)
+                            return;
+                        var file = files[0];
+                        if (!file.type.match(/image/)) {
+                            alert('画像ファイルを選んでください');
+                            return;
+                        }
+                        var reader = new FileReader();
+                        reader.onload = function (evt) {
+                            $("#thumb").src = reader.result;
+                            showImage(true);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+
+                    function showImage(b) {
+                        var val = b ? "block" : "none";
+                        $("#up_btn").style.display = val;
+                        $("#thumb").style.display = val;
+                    }
+
+                    function $(id) {
+                        return document.querySelector(id);
+                    }
+                </script>
+
+
+
+
+            </nav>
+
+        </div>
+
+
+        <!--フッター読み込み-->
+        <div th:replace="footer :: copy"></div>
+        <!--フッターここまで-->
+
+
+    </body>
+
+</html>

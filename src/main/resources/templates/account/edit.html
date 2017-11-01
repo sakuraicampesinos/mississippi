@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <title>顧客情報編集</title>
+     </head>
+    <body>
+        <h2>編集</h2>
+        
+        <form th:action="@{/accounts/edit}" th:object="${accountForm}" method="post">
+            
+            <dl>
+                <dt><label for="mail">メール</label></dt>
+                <dd>
+                    <input type="text" id="mail" name="mail" th:field="*{mail}" 
+                           th:errorclass="error-input" value="山田" />
+                   <span th:if="${#fields.hasErrors('*{mail}')}" th:errors="*{mail}" style="color: red" />
+                </dd>
+                
+                
+            </dl>
+            <input type="submit" name="gotoTop" value="戻る" />
+            <input type="hidden" name="id" th:value="${param.id[0]}"/>
+        </form>
+        
+    </body>
+</html>

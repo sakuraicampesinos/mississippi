@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+    <!--head読み込み-->
+    <div th:replace="header :: head"></div>
+    <!--headここまで-->
+
+    <body>
+
+ <!-- headerナビ -->
+ <div th:replace="nav :: navi_bar"></div>
+  <!-- headerナビここまで -->
+
+<!--メインコンテンツ部分-->
+        <div class="container section">
+
+            <div class="columns">
+
+                <div class="column is-3">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-64x64">
+                                        <img src="http://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"></img>
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">John Smith</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-content">
+                            <h1 class="subtitle">hogehoge案件</h1>
+                            <p>カンプ作成</p>
+                            <p>10:30くらいまで</p>
+                            <p>詰まったら誰かに相談します</p>
+                            <br/>
+                        </div>
+
+                        <footer class="card-footer">
+                            <a class="card-footer-item" data-tgt="wd1" >ENTER</a>
+                            <p data-tgt="wd1" class="btns">ENTER</p>
+                        </footer>
+                    </div>
+                </div>
+                <div class="column is-3">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-64x64">
+                                        <img src="http://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"></img>
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">John SmithJohn</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-content">
+                            <h1 class="subtitle">hogehoge案件</h1>
+                            <p>カンプ作成</p>
+                            <p>10:30くらいまで</p>
+                            <p>詰まったら誰かに相談します</p>
+                            <br/>
+                        </div>
+
+
+                        <footer class="card-footer">
+                            <!-- <a class="card-footer-item"></a> -->
+                        </footer>
+                        <div class="card-content">
+                            <div class="panel-block-item">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-3">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                <img src="https://placehold.it/64x64" class="avatar"></img>
+                                &commat;username
+                            </p>
+                            <span class="card-header-icon timestamp">
+                                2m
+                            </span>
+                        </header>
+                        <div class="card-image">
+
+                        </div>
+                        <div class="card-content">
+                            <div class="panel-block-item">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-3">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                <img src="https://placehold.it/64x64" class="avatar"></img>
+                                &commat;username
+                            </p>
+                            <span class="card-header-icon timestamp">
+                                2m
+                            </span>
+                        </header>
+                        <div class="card-image">
+
+                        </div>
+                        <div class="card-content">
+                            <div class="panel-block-item">
+                                <p>test</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--モーダル-->
+            <div class="modal wd1">
+                <div class="modalBody">
+                    <p class="close">×close</p>
+                    <p>タスク登録</p>
+
+                    <form id="form" action="/register" th:action="@{/register}" th:object="${taskForm}" method="post" onsubmit="return input_check();">
+                        <p>タイトル: <input type="text" th:field="*{title}" /></p>
+                        <p>内容: <input type="text" th:field="*{content}" /></p>
+                        <div class="demo">
+                            <p>開始時間:<input id="start" name="start" type="text" size="5" th:field="*{start_date}" /></p>
+                            <span id="start_error" class="error_m"></span>
+                        </div>
+
+                        <div class="demo">
+                            <p>終了時間:<input id="end" name="end" type="text" size="5" th:field="*{end_date}" /></p>
+                        </div>
+
+                        <input id="sub" type="submit" value="登録" ></input>
+                    </form>
+                </div>
+                <div class="modalBK"></div>
+            </div>
+            <!--ここまで-->
+            
+            
+            
+            
+              <!--ここログインユーザのカード-->
+                                <div class="col-md-3 mb">
+                                    <!-- WHITE PANEL - TOP USER -->
+                                    <div class="white-panel pn">
+                                        <p><img th:src="@{/img/ui-danro.jpg}" class="img-circle" width="70"></img></p>
+
+                                        <!--ユーザ名とかタスク一覧-->
+                                        <p><span th:text="${u_name}">（ユーザ名）</span></p>
+                                        <div class="row">
+
+                                            <!--ここタスク-->
+                                            <div data-intro="早速タスクの登録をしてみよう" data-step="1" class="col-md-12" th:if="${task != null}">
+                                                <p class="small mt"><span th:text="${task.title}"></span></p>
+                                                <!--<p th:if="${task.title != null}">タスク登録をしよう</p>-->
+                                                <p><span th:text="${task.content}"></span></p>
+
+                                                <!--<p><span th:text="${task.start_date}"></span></p>-->
+                                                <p><span th:text="|${#dates.format(task.end_date, 'HH:mm')} くらいまで|"></span></p>
+                                                <p data-tgt="wd1" class="btns">ENTER</p>
+
+                                            </div>
+
+                                            <div class="col-md-12" th:if="${task == null}">
+                                                <p>早速タスク登録をしてみよう!</p>
+                                                <p data-tgt="wd1" class="btns">ENTER</p>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+            
+            
+            
+              
+        </div>
+<!--メインコンテンツここまで-->
+
+        <!--フッター読み込み-->
+        <div th:replace="footer :: copy"></div>
+        <!--フッターここまで-->
+
+        <script type="text/javascript" src="../js/bulma.js"></script>
+    </body>
+
+
+</html>

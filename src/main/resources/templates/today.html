@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <title>mspapp</title>
+        <link href="/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"></link>
+        <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"></link>
+        <link href="/css/jquery.timepicker.css" th:href="@{/css/jquery.timepicker.css}" rel="stylesheet"></link>
+        <link href="/bootstrap/css/bootstrap.css" th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css"></link>
+
+        
+        <link rel="stylesheet" media="all" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+        <script src="/js/jquery.timepicker.min.js" th:src="@{/js/jquery.timepicker.min.js}"></script>
+        <script type="text/javascript" src="/js/custom.js" th:src="@{/js/custom.js}"></script>
+        <script src="/js/footerFixed.js" th:src="@{/js/footerFixed.js}"></script>
+
+    </head>
+    
+    <body>
+          <section id="container" >
+              
+  <header class="header black-bg">
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+              </div>
+            <!--logo start-->
+            <a href="index.html" class="logo"><b>ropes</b></a>
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu">
+
+                <!--  notification end -->
+            </div>
+            <div class="top-menu">
+                
+<!--                <form method="post" th:action="@{/logout}">
+                    <ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="login.html">Logout</a></li>
+                    <li><a class="logout" th:href="@{'/logout'}" >Logout</a></li>
+                    </ul>
+                </form>-->
+                <form method="post" th:action="@{/logout}">
+                    <input class="logout" type="submit" value="Logout" />
+                </form>
+            </div>
+        </header>
+  
+  <!--ここへっだ終わり-->
+      
+<!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      
+        <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+
+              	  <!-- <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+              	  <h5 class="centered">sakurai kosuke</h5> -->
+
+                  <li class="mt">
+                      <a class="active" href="index.html">
+                          <i class="fa fa-dashboard"></i>
+                          <span>TODAY</span>
+                      </a>
+                  </li>
+
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      
+<!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+    <section id="main-content">
+        <section class="wrapper">
+
+
+                                <!--<div class="page-content">-->
+                                 <div class="row">
+                                        <div class="col-lg-12 main-chart">
+                                                                   <div class="row mt">
+
+
+                               <!-- ここメイン画面 -->
+                               <!--<div class="col-md-10">-->
+
+                                 <!--ここログインユーザのカード-->
+                                 <div class="col-md-4 mb">
+                                       <!-- WHITE PANEL - TOP USER -->
+                                       <div class="white-panel pn">
+                                           <p><img th:src="@{/img/ui-danro.jpg}" class="img-circle" width="70"></img></p>
+
+                                         <!--ユーザ名とかタスク一覧-->
+                                         <p><span th:text="${u_name}">（ユーザ名）</span></p>
+                                         <div class="row">
+
+                                           <!--ここタスク-->
+                                           <div class="col-md-12" th:if="${task != null}">
+                                               <p class="small mt"><span th:text="${task.title}"></span></p>
+                                               <!--<p th:if="${task.title != null}">タスク登録をしよう</p>-->
+                                               <p><span th:text="${task.content}"></span></p>
+                                               
+                                               <!--<p><span th:text="${task.start_date}"></span></p>-->
+                                               <p><span th:text="|${#dates.format(task.end_date, 'HH:mm')} くらいまで|"></span></p>
+                                               <p data-tgt="wd1" class="btns">ENTER</p>
+
+                                           </div>
+
+                                           <div class="col-md-12" th:if="${task == null}">
+                                               <!--<p class="small mt"><span th:text="${task.title}"></span></p>-->
+                                               <p>早速タスク登録をしてみよう</p>
+                         <!--                      <p><span th:text="${task.content}"></span></p>
+                                               <p><span th:text="${task.start_date}"></span></p>
+                                               <p><span th:text="${task.end_date}"></span></p>-->
+                                           </div>
+                                         </div>
+                                        <!--<p data-tgt="wd1" class="btns">ENTER</p>-->
+                                       </div>
+
+                                       <!--モーダル-->
+
+                                             <div class="modal wd1">
+                                                     <div class="modalBody">
+                                                             <p class="close">×close</p>
+                                                             <p>タスク登録</p>
+
+                                                             <form action="/register" th:action="@{/register}" th:object="${taskForm}" method="post">
+
+                                                                 <p>タイトル: <input type="text" th:field="*{title}"/></p>
+                                                                 <p>内容: <input type="text" th:field="*{content}"/></p>
+                                                                 <div class="demo">
+                                                                     <p>開始時間:<input id="start" type="text" th:field="*{start_date}"  /></p>
+                                                                 </div>
+
+                                                                 <div class="demo">
+                                                                     <p>終了時間:<input id="end" type="text" th:field="*{end_date}" /></p>
+                                                                 </div>
+
+                                                                 <p><input type="submit" value="登録"/></p>
+
+                                                             </form>
+
+                                                     </div>
+
+                                                     <div class="modalBK"></div>
+                                             </div>
+                                             <!--ここまで-->
+                                 </div>
+                                 <!-- /col-md-4 -->
+                                 <!-- ログインユーザのカードここまで -->
+
+                                 <!--ここログインユーザのカード-->
+                                 <div class="col-md-4 mb" th:each = "othertasks : ${othertasks} ">
+                                       <!-- WHITE PANEL - TOP USER -->
+                                       <div class="white-panel pn">
+                                           <p><img th:src="@{/img/ui-danro.jpg}" class="img-circle" width="70"></img></p>
+
+                                         <!--ユーザ名とかタスク一覧-->
+                                         <p><span th:text="${othertasks.user.name}">（ユーザ名）</span></p>
+                                         <div class="row">
+
+                                           <!--ここタスク-->
+                                           <div class="col-md-12">
+                                               <p class="small mt"><span th:text="${othertasks.title}"></span></p>
+                                               <p><span th:text="${othertasks.content}"></span></p>
+                                               <!--<p><span th:text="${othertasks.start_date}"></span></p>-->
+                                               <p><span th:text="|${#dates.format(othertasks.end_date, 'HH:mm')} くらいまで|"></span></p>
+                                           </div>
+
+                                         </div>
+                                       </div>
+                                 </div>
+                                 <!-- /col-md-4 -->
+                                 <!-- ログインユーザのカードここまで -->
+
+                                 </div>
+                             </div>
+                                 </div>
+                                     
+                                     
+                                             </section>
+                                    </section>
+
+                                                             <footer id="footer" class="site-footer">
+                                                               <div class="text-center">
+                                                                 MississippiDesign
+                                                                   <a href="index.html#" class="go-top">
+                                                                       <i class="fa fa-angle-up"></i>
+                                                                   </a>
+                                                               </div>
+                                                           </footer>
+        </section>
+      
+      
+    </body>
+</html>

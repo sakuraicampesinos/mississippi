@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <title>mspapp</title>
+        <link rel="stylesheet" media="all" th:href="@{css/style.css}"/>
+        <link rel="stylesheet" media="all" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    </head>
+    <body>
+        <h2>JPAのレベルアップページ</h2>
+        
+        <table>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.mail}"></td>
+                <td th:text="${user.name}"></td>
+                
+                <td>
+                    <form th:action="@{/accounts/edit}" method="get">
+                        <input type="submit" name="form" value="編集" />
+                        <input type="hidden" name="id" th:value="${user.id}" />
+                    </form>
+                </td>
+                
+<!--                <td>
+                    <form th:action="@{/accounts/delete}" method="post">
+                        <input type="submit" value="削除" />
+                        <input type="hidden" name="id" th:value="${user.id}" />
+                </td>
+                -->
+            </tr>
+        </table>
+        
+    </body>
+</html>

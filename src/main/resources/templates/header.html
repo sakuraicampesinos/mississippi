@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+
+        <head th:fragment="head">
+            <meta charset="UTF-8" />
+            <title>ROPES</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></link>
+            <link rel="stylesheet" id="bulma" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css" ></link>
+            <link rel="stylesheet" type="text/css" href="../css/grid-gallery.css"></link>
+            <link rel="stylesheet" href="css/bulma.css" type="text/css"></link>
+            <link rel="stylesheet" type="text/css" href="css/introjs.css"></link>
+            <link rel="stylesheet" href="css/jquery.timepicker.css" ></link>
+
+            <!--javascript-->
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+            th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+            <script type="text/javascript" src="/js/input_check.js" th:src="@{/js/input_check.js}"></script>
+            <script src="/js/footerFixed.js" th:src="@{/js/footerFixed.js}"></script>
+            <script type="text/javascript" src="/js/custom.js" th:src="@{/js/custom.js}"></script>
+            <script type="text/javascript" src="js/intro.js"></script>
+            <script type="text/javascript" src="js/jquery.timepicker.min.js"></script>
+
+
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+            <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        </head>
+    </body>
+</html>
