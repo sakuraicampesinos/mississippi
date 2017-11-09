@@ -5,6 +5,7 @@
  */
 package com.example.msp_test1.app.service;
 
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.msp_test1.app.AccountForm;
 import com.example.msp_test1.app.FileUploadForm;
 import com.example.msp_test1.app.MenuController;
@@ -13,6 +14,7 @@ import com.example.msp_test1.app.model.User;
 import com.example.msp_test1.app.model.UserRepository;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.Principal;
 import java.util.Date;
@@ -32,6 +34,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -98,37 +102,51 @@ public class UserService {
     }
 
 //    private static final Logger log = Logger.getLogger(MenuController.class);
-
-    public void userProfile_imgUpload(FileUploadForm fileUploadForm, Principal principal) throws IOException{
+    public void userProfile_imgUpload(FileUploadForm fileUploadForm, Principal principal) throws IOException {
 
         Authentication auth = (Authentication) principal;
         User user = (User) auth.getPrincipal();
 //        log.info(user);
 
 //        System.out.println("Fetching file");
-        MultipartFile multipartFile = fileUploadForm.getFileData();
+//        MultipartFile multipartFile = fileUploadForm.getFileData();
 //        log.info(multipartFile.getSize());
-        String fileName = multipartFile.getOriginalFilename();
+//        String fileName = multipartFile.getOriginalFilename();
 //        log.info(fileName);
-        String path = new File(".").getAbsoluteFile().getParent();
+//        String path = new File(".").getAbsoluteFile().getParent();
 //        log.info(path);
-        String path2 = System.getProperty("user.dir");
+//        String path2 = System.getProperty("user.dir");
 //        log.info(path2);
-        FileCopyUtils.copy(fileUploadForm.getFileData().getBytes(), new File(fileUploadForm.getFileData().getOriginalFilename()));
-     
+//        FileCopyUtils.copy(fileUploadForm.getFileData().getBytes(), new File(fileUploadForm.getFileData().getOriginalFilename()));
+
         String imgName = fileUploadForm.getFileData().getOriginalFilename();
         String userName = user.getName();
 
         Resource resource = this.resourceLoader.getResource("s3://sakuraicamp/" + userName + "/" + imgName);
-
-//        log.info(resource);
         WritableResource writableResource = (WritableResource) resource;
-//        log.info(writableResource);
         try (OutputStream output = writableResource.getOutputStream()) {
             byte[] bytes = fileUploadForm.getFileData().getBytes();
             output.write(bytes);
         } catch (IOException e) {
 
+        }
+    }
+
+    private WritableResource getResource() {
+        return (WritableResource) resourceLoader.getResource("s3://sakuraicamp/hoge");
+    }
+
+    private void copy(InputStream in, OutputStream out) throws IOException {
+        byte[] buff = new byte[1024];
+        for (int len = in.read(buff); len > 0; len = in.read(buff)) {
+            out.write(buff, 0, len);
+        }
+    }
+    
+    public void put(InputStream req) throws Exception {
+        WritableResource resource = getResource();
+        try (OutputStream out = resource.getOutputStream()) {
+            copy(req, out);
         }
     }
 
